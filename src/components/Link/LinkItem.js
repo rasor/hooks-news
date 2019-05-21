@@ -4,7 +4,6 @@ import distanceInWordsToNow from "date-fns/distance_in_words_to_now";
 
 import { getDomain } from "../../utils";
 import FirebaseContext from "../../firebase/context";
-import { link } from "fs";
 
 function LinkItem(props) {
   const { firebase, user } = useContext(FirebaseContext);
@@ -36,7 +35,6 @@ function LinkItem(props) {
   }
 
   function handleDeleteLink(e) {
-    console.log(e);
     const linkRef = firebase.db.collection("links").doc(id);
     linkRef
       .delete()

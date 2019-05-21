@@ -7,9 +7,9 @@ import validateLogin from "./validateLogin";
 import firebase from "../../firebase";
 
 const INITIAL_SATE = {
-  name: "john doe",
-  email: "johndoe@google.com",
-  password: "12341234"
+  name: "Carlton Joseph",
+  email: "carlton.joseph@gmail.com",
+  password: "hooks1Man"
 };
 function Login(props) {
   const {
