@@ -5,7 +5,6 @@ import { FirebaseContext } from "../firebase";
 
 function Header() {
   const { user, firebase } = useContext(FirebaseContext);
-  console.log(user);
   return (
     <div className="header">
       <div className="flex">
