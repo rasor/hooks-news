@@ -4,6 +4,7 @@ import distanceInWordsToNow from "date-fns/distance_in_words_to_now";
 
 import { getDomain } from "../../utils";
 import FirebaseContext from "../../firebase/context";
+import { link } from "fs";
 
 function LinkItem(props) {
   const { firebase, user } = useContext(FirebaseContext);
@@ -20,6 +21,7 @@ function LinkItem(props) {
     comments,
     history
   } = props;
+
   function handleVote(e) {
     if (!user) return history.push("/login");
     const voteRef = firebase.db.collection("links").doc(id);
@@ -32,6 +34,17 @@ function LinkItem(props) {
       }
     });
   }
+
+  function handleDeleteLink(e) {
+    console.log(e);
+    const linkRef = firebase.db.collection("links").doc(id);
+    linkRef
+      .delete()
+      .then(() => console.log(`Document with ID ${id} deleted`))
+      .catch(err => console.error("Error deleting document:", err));
+  }
+  const postedByAuthUser = user && user.uid === postedBy.id;
+
   return (
     <div className="flex items-start mt2">
       <div className="flex items-center">
@@ -51,6 +64,14 @@ function LinkItem(props) {
           <Link to={`link/${id}`}>
             {comments.length > 0 ? `${comments.length} comments` : "discuss"}
           </Link>
+          {postedByAuthUser && (
+            <>
+              {" | "}
+              <span className="delete-button" onClick={handleDeleteLink}>
+                delete
+              </span>
+            </>
+          )}
         </div>
       </div>
     </div>
