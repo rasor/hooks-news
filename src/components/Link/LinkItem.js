@@ -53,13 +53,15 @@ function LinkItem(props) {
       </div>
       <div className="ml1">
         <div>
-          {description}
+          <a href={url} className="black no-underline">
+            {description}
+          </a>
           <span className="link">({getDomain(url)})</span>
         </div>
         <div className="f6 lh-copy gra">
           {votes.length} votes by {postedBy.name}{" "}
           {distanceInWordsToNow(created)} |{" "}
-          <Link to={`link/${id}`}>
+          <Link to={`/link/${id}`}>
             {comments.length > 0 ? `${comments.length} comments` : "discuss"}
           </Link>
           {postedByAuthUser && (
