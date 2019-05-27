@@ -18,7 +18,8 @@ function LinkItem(props) {
     created,
     id,
     comments,
-    history
+    history,
+    voteCount
   } = props;
 
   function handleVote(e) {
@@ -29,7 +30,8 @@ function LinkItem(props) {
         const previousVotes = doc.data().votes;
         const vote = { votedBy: { id: user.uid, name: user.displayName } };
         const updatedVotes = [...previousVotes, vote];
-        voteRef.update({ votes: updatedVotes });
+        const voteCount = updatedVotes.length;
+        voteRef.update({ votes: updatedVotes, voteCount });
       }
     });
   }
@@ -59,8 +61,7 @@ function LinkItem(props) {
           <span className="link">({getDomain(url)})</span>
         </div>
         <div className="f6 lh-copy gra">
-          {votes.length} votes by {postedBy.name}{" "}
-          {distanceInWordsToNow(created)} |{" "}
+          {voteCount} votes by {postedBy.name} {distanceInWordsToNow(created)} |{" "}
           <Link to={`/link/${id}`}>
             {comments.length > 0 ? `${comments.length} comments` : "discuss"}
           </Link>

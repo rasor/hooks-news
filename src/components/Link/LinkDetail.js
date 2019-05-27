@@ -28,7 +28,7 @@ function LinkDetail(props) {
       const previousComments = doc.data().comments;
       const comment = {
         postedBy: { id: user.uid, name: user.displayName },
-        create: Date.now(),
+        created: Date.now(),
         text: commentText
       };
       const updatedComments = [...previousComments, comment];
@@ -59,7 +59,8 @@ function LinkDetail(props) {
           {link.comments.map((comment, idx) => (
             <div key={idx}>
               <p className="comments-author">
-                {comment.postedBy.name} | {distanceInWordsToNow(comment.create)}
+                {comment.postedBy.name} |{" "}
+                {distanceInWordsToNow(comment.created)}
               </p>
               <p>{comment.text}</p>
             </div>
