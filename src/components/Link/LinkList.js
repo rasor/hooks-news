@@ -38,6 +38,17 @@ function LinkList(props) {
         .startAfter(cursor.created)
         .limit(LINKS_PER_PAGE)
         .onSnapshot(handleSnapshot);
+    const offset = (page - 1) * LINKS_PER_PAGE;
+    fetch(
+      `https://us-central1-hooks-news-app-f32dc.cloudfunctions.net/linksPagination?offset=${offset}`
+    )
+      .then(response => response.json())
+      .then(links => {
+        linksSet(links);
+        cursorSet(links[links.length - 1]);
+      })
+      .catch(e => console.log("error", e));
+    return () => {};
   }
 
   function handleSnapshot(snapshot) {

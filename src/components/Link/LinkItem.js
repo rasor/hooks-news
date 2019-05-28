@@ -13,7 +13,6 @@ function LinkItem(props) {
     url,
     showCount,
     index,
-    votes,
     postedBy,
     created,
     id,
