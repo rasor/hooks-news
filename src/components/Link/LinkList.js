@@ -8,9 +8,11 @@ function LinkList(props) {
   const { firebase } = useContext(FirebaseContext);
   const [links, linksSet] = useState([]);
   const [cursor, cursorSet] = useState(null);
+  const [loading, loadingSet] = useState(false);
   const isNewPage = props.location.pathname.includes("new");
   const isTopPage = props.location.pathname.includes("top");
   const page = Number(props.match.params.page);
+  const linksRef = firebase.db.collection("links");
 
   useEffect(() => {
     const unsubscribe = getLinks();
@@ -18,22 +20,20 @@ function LinkList(props) {
   }, [isTopPage, page]);
 
   function getLinks() {
+    loadingSet(true);
     const hasCursor = Boolean(cursor);
     if (isTopPage)
-      return firebase.db
-        .collection("links")
+      return linksRef
         .orderBy("voteCount", "desc")
         .limit(LINKS_PER_PAGE)
         .onSnapshot(handleSnapshot);
     if (page === 1)
-      return firebase.db
-        .collection("links")
+      return linksRef
         .orderBy("created", "desc")
         .limit(LINKS_PER_PAGE)
         .onSnapshot(handleSnapshot);
     if (hasCursor)
-      return firebase.db
-        .collection("links")
+      return linksRef
         .orderBy("created", "desc")
         .startAfter(cursor.created)
         .limit(LINKS_PER_PAGE)
@@ -46,6 +46,7 @@ function LinkList(props) {
       .then(links => {
         linksSet(links);
         cursorSet(links[links.length - 1]);
+        loadingSet(false);
       })
       .catch(e => console.log("error", e));
     return () => {};
@@ -56,6 +57,7 @@ function LinkList(props) {
     linksSet(links);
     const lastLink = links[links.length - 1];
     cursorSet(lastLink);
+    loadingSet(false);
   }
 
   function visitPreviousPage() {
@@ -69,7 +71,7 @@ function LinkList(props) {
 
   const pageIndex = page ? (page - 1) * LINKS_PER_PAGE + 1 : 0;
   return (
-    <div>
+    <div style={{ opacity: loading ? 0.25 : 1 }}>
       {links.map((link, index) => (
         <LinkItem
           key={link.id}
