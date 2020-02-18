@@ -7,7 +7,7 @@ const admin = require("firebase-admin");
 
 admin.initializeApp({
   credential: admin.credential.applicationDefault(),
-  databaseURL: "https://hooks-news-app-f32dc.firebaseio.com"
+  databaseURL: "https://hooks-news-rasor.firebaseio.com"
 });
 
 const db = admin.firestore();
