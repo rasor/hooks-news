@@ -4,7 +4,7 @@
 
 The code in this repository is based on the
 [Awesome Apps with React Hooks and Firebase [Video]](https://www.packtpub.com/web-development/awesome-apps-with-react-hooks-and-firebase-video)
-course by Reed Barger.  
+course by [Reed Barger](https://github.com/reedbarger/hooks-news).  
 Code is forked from [carltonwin8/hooks-news](https://github.com/carltonwin8/hooks-news).  
 
 The code has CRA frontend and Firebase backend and hosting at Firebase.  
@@ -102,6 +102,7 @@ Verify you have no
 * or other resorces/features
 ... in your project yet.  
 
+Optionally upgrade your dependencies with ``npm update`
 Now get dependencies in your CRA project with `npm install`  
 Then deploy only the functions folder with
 `firebase deploy --only functions`.
