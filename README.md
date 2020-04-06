@@ -37,26 +37,6 @@ npm install
 cd ..
 ```
 
-Edit `firebase.json`. Add hosting
-```json
-{
-  "hosting": {
-    "public": "build",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  }
-}
-```
-
 Edit `index.js` in the `./functions` folder. Add functions from the course:
 ```js
 const functions = require("firebase-functions");
@@ -102,7 +82,11 @@ Verify you have no
 * or other resorces/features
 ... in your project yet.  
 
+### Authentication
+
 In [authentication/providers](https://console.firebase.google.com/project/hooks-news-rasor/authentication/providers) select Email/Password and enable.
+
+### Web app - having DB and Storage
 
 In [settings/general](https://console.firebase.google.com/project/hooks-news-rasor/settings/general/) goto the bottom right and **add a web app**. Again name it `hooks-news-rasor` and press **Register**.  
 This will provide you with some code. Grap the part within the `<script>` tags:
@@ -131,10 +115,15 @@ save this to `/src/firebase/config.js` and
 
 Optionally upgrade your dependencies with `npm update`
 Now get dependencies in your CRA project with `npm install`  
+
+### Deploy backend functions
+
 Then deploy only the functions folder with
 `firebase deploy --only functions`.
 
 Verify you now have one [serverless function](https://console.firebase.google.com/project/hooks-news-rasor/functions) (called `linksPagination`).  
+
+### Test run locally
 
 Build code via `npm run build`. If this goes well, then run the app in dev mode with `npm start`.  
 This will open a broswer. Press `login` an add yourself as a user.  
@@ -142,12 +131,22 @@ You can see your account in [authentication/users](https://console.firebase.goog
 
 Now press `submit` and add a link.  
 
-Setup hosting `firebase init hosting`
-with the `build` directory, as a single-page app without overwritting the
-index.html in the build directory. Use `firebase deploy` to deploy the
-functions and host the html.
+### Deploy frontend
+
+Setup hosting `firebase init hosting`.  
+Questions:  
+_? What do you want to use as your public directory? (public)_ `build`  
+_? Configure as a single-page app (rewrite all urls to /index.html)? (y/N)_ `N`  
+_? File build/index.html already exists. Overwrite? (y/N)_ `N`  
+Info:  
+_i  Writing configuration info to `firebase.json`..._  
+_i  Writing project information to `.firebaserc`..._  
+
+Use `firebase deploy` to deploy the functions and host the html.
 
 Result from the deploy are:  
-Project Console: https://console.firebase.google.com/project/hooks-news-app-f32dc/overview  
-carltonwin8's Hosting URL: https://hooks-news-app-f32dc.firebaseapp.com  
+Project Console: https://console.firebase.google.com/project/hooks-news-rasor/overview  
+Hosting URL: https://hooks-news-rasor.firebaseapp.com  
+carltonwin8's Hosting URL: https://hooks-news-app-f32dc.firebaseapp.com   
 
+The End.  
