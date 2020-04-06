@@ -1,7 +1,9 @@
 // Your web app's Firebase configuration
+// from https://console.firebase.google.com/project/hooks-news-rasor/settings/general
 var firebaseConfig = {
-    apiKey: "AIzaxxxxxxxxxxxxxxxxxxxx9VmkND65lJdtWUM",
+    apiKey: "AIzaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxdtWUM",
     authDomain: "hooks-news-rasor.firebaseapp.com",
+    // do also set in /functions/index.js - source file for your Cloud Functions code
     databaseURL: "https://hooks-news-rasor.firebaseio.com",
     projectId: "hooks-news-rasor",
     storageBucket: "hooks-news-rasor.appspot.com",

@@ -21,10 +21,11 @@ Use Admin GUI: [Firebase Portal](https://console.firebase.google.com/?pli=1)
 
 Use `firebase logout`, then `firebase login` to be authenciated at the cli.  
 When you login you give Firebase CLI permission to access your GCP account.  
-If you want to remove the permission goto [Apps with access to your account](https://myaccount.google.com/permissions?pli=1)
+If you want to remove the permission goto [Apps with access to your account](https://myaccount.google.com/permissions?pli=1)  
 
 Create a project for your app in the [Firebase Portal](https://console.firebase.google.com/). Don't choose analytics, if you are just testing Firebase. 
-Mine was named `hooks-news-rasor`
+Mine was named `hooks-news-rasor`.  
+Some [GCP service account](https://console.cloud.google.com/iam-admin/serviceaccounts?project=hooks-news-rasor&authuser=0) for the app was created at some point.  
 
 Use `firebase init functions` to initialize the `./functions` directory.  
 Select `Use an existing project` - select the one you created.  
@@ -95,6 +96,8 @@ This will provide you with some code. Grap the part within the `<script>` tags:
   var firebaseConfig = {
     apiKey: "AIzaxxxxxxxxxxxxxxxxxxxx9VmkND65lJdtWUM",
     authDomain: "hooks-news-rasor.firebaseapp.com",
+    // https://console.firebase.google.com/project/hooks-news-rasor/database/hooks-news-rasor/data
+    // https://console.firebase.google.com/project/hooks-news-rasor/database/firestore/data
     databaseURL: "https://hooks-news-rasor.firebaseio.com",
     projectId: "hooks-news-rasor",
     storageBucket: "hooks-news-rasor.appspot.com",
@@ -116,12 +119,19 @@ save this to `/src/firebase/config.js` and
 Optionally upgrade your dependencies with `npm update`
 Now get dependencies in your CRA project with `npm install`  
 
+### Create Cloud Firestore
+
+The above created a **Realtime Database**, which is for automatic push of updates to clients.  
+This code is dependent of **Cloud Firestore**, which is a normal document DB.
+From [database](https://console.firebase.google.com/project/hooks-news-rasor/database) create a new Cloud Firestore.
+
 ### Deploy backend functions
 
 Then deploy only the functions folder with
 `firebase deploy --only functions`.
 
 Verify you now have one [serverless function](https://console.firebase.google.com/project/hooks-news-rasor/functions) (called `linksPagination`).  
+The public link to the function you should paste in `/src/components/Link/LinkList.js`.  
 
 ### Test run locally
 
@@ -141,6 +151,8 @@ _? File build/index.html already exists. Overwrite? (y/N)_ `N`
 Info:  
 _i  Writing configuration info to `firebase.json`..._  
 _i  Writing project information to `.firebaserc`..._  
+
+* `.firebaserc`: Hidden file that helps you quickly switch between projects with `firebase use`
 
 Use `firebase deploy` to deploy the functions and host the html.
 

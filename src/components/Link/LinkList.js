@@ -40,7 +40,8 @@ function LinkList(props) {
         .onSnapshot(handleSnapshot);
     const offset = (page - 1) * LINKS_PER_PAGE;
     fetch(
-      `https://us-central1-hooks-news-app-f32dc.cloudfunctions.net/linksPagination?offset=${offset}`
+      // From https://console.firebase.google.com/project/hooks-news-rasor/functions/list
+      `https://us-central1-hooks-news-rasor.cloudfunctions.net/linksPagination?offset=${offset}`
     )
       .then(response => response.json())
       .then(links => {

@@ -7,14 +7,14 @@ const admin = require("firebase-admin");
 
 admin.initializeApp({
   credential: admin.credential.applicationDefault(),
+  // from https://console.firebase.google.com/project/hooks-news-rasor/settings/general
   databaseURL: "https://hooks-news-rasor.firebaseio.com"
 });
 
 const db = admin.firestore();
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
+// Create and Deploy Your First Cloud Functions
+// https://firebase.google.com/docs/functions/write-firebase-functions
 exports.linksPagination = functions.https.onRequest(
   async (request, response) => {
     response.set("Access-Control-Allow-Origin", "*");
