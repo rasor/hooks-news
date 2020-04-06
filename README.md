@@ -125,6 +125,21 @@ The above created a **Realtime Database**, which is for automatic push of update
 This code is dependent of **Cloud Firestore**, which is a normal document DB.
 From [database](https://console.firebase.google.com/project/hooks-news-rasor/database) create a new Cloud Firestore.
 
+To be able to access the db, we'll use [Basic Security Rules - Mixed public and private access](https://firebase.google.com/docs/rules/basics?authuser=0#mixed_public_and_private_access).  
+In [Cloud Firestore rules](https://console.firebase.google.com/project/hooks-news-rasor/database/firestore/rules) add:
+```java
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+    	allow read: if true;
+      allow create: if request.auth.uid != null;
+      allow update, delete: if request.auth.uid == resource.data.postedBy.id;
+    }
+  }
+}
+```
+
 ### Deploy backend functions
 
 Then deploy only the functions folder with
