@@ -37,7 +37,7 @@ npm install
 cd ..
 ```
 
-Edit firebase.json. Add hosting
+Edit `firebase.json`. Add hosting
 ```json
 {
   "hosting": {
@@ -102,14 +102,47 @@ Verify you have no
 * or other resorces/features
 ... in your project yet.  
 
-Optionally upgrade your dependencies with ``npm update`
+In [authentication/providers](https://console.firebase.google.com/project/hooks-news-rasor/authentication/providers) select Email/Password and enable.
+
+In [settings/general](https://console.firebase.google.com/project/hooks-news-rasor/settings/general/) goto the bottom right and **add a web app**. Again name it `hooks-news-rasor` and press **Register**.  
+This will provide you with some code. Grap the part within the `<script>` tags:
+```js
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaxxxxxxxxxxxxxxxxxxxx9VmkND65lJdtWUM",
+    authDomain: "hooks-news-rasor.firebaseapp.com",
+    databaseURL: "https://hooks-news-rasor.firebaseio.com",
+    projectId: "hooks-news-rasor",
+    storageBucket: "hooks-news-rasor.appspot.com",
+    messagingSenderId: "682999999999",
+    appId: "1:682999999999:web:89560ebd18605aaaaaaaaa"
+  };
+  
+  // Remove these lines:
+  // Initialize Firebase
+  // firebase.initializeApp(firebaseConfig);
+
+  // Add this line:
+  export default firebaseConfig;
+```
+save this to `/src/firebase/config.js` and 
+* add the line with `export default firebaseConfig;` and
+* comment out the `firebase.initializeApp` line.
+
+Optionally upgrade your dependencies with `npm update`
 Now get dependencies in your CRA project with `npm install`  
 Then deploy only the functions folder with
 `firebase deploy --only functions`.
 
-Verify you now have one [serverless function](https://console.firebase.google.com/project/hooks-news-rasor/functions).  
+Verify you now have one [serverless function](https://console.firebase.google.com/project/hooks-news-rasor/functions) (called `linksPagination`).  
 
-Build code via `npm run build`, then setup hosting `firebase init hosting`
+Build code via `npm run build`. If this goes well, then run the app in dev mode with `npm start`.  
+This will open a broswer. Press `login` an add yourself as a user.  
+You can see your account in [authentication/users](https://console.firebase.google.com/project/hooks-news-rasor/authentication/users).  
+
+Now press `submit` and add a link.  
+
+Setup hosting `firebase init hosting`
 with the `build` directory, as a single-page app without overwritting the
 index.html in the build directory. Use `firebase deploy` to deploy the
 functions and host the html.
