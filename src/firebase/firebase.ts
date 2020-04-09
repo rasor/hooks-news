@@ -14,7 +14,7 @@ export class Firebase {
     this.db = app.firestore();
   }
 
-  async register(name: any, email: string, password: string) {
+  async register(name: string, email: string, password: string) {
     const newUser = await this.auth.createUserWithEmailAndPassword(
       email,
       password

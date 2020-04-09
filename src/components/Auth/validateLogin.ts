@@ -1,5 +1,8 @@
-export default function validateLogin(values) {
-  let errors = {};
+import { Dictionary } from "../../models/interfaces";
+import { LoginFormValues } from "./Login";
+
+export default function validateLogin(values: LoginFormValues): Dictionary {
+  let errors: Dictionary = {};
 
   if (!values.email) {
     errors.email = "Email required";

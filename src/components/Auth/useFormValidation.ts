@@ -5,9 +5,9 @@ function useFormValidation(
   /** (form)vaules object to validate */
   initialState: Dictionary, 
   /** Func for validating the vlues object */
-  validateLogin: ({}: Dictionary) => Dictionary, 
+  validateLogin: (values: Dictionary) => Dictionary, 
   /** Funct to exec if validation succeeds */
-  authenticate: () => any
+  authenticate: (values: Dictionary) => any
   ) {
 
   const [values, setValues] = useState<Dictionary>(initialState);
@@ -19,7 +19,7 @@ function useFormValidation(
       const noErrors = Object.keys(errors).length === 0;
       if (noErrors) {
         (async () => {
-          const cb = await authenticate();
+          const cb = await authenticate(values);
           setIsSubmitting(false);
           if (cb) cb();
         })();
@@ -42,13 +42,21 @@ function useFormValidation(
     setIsSubmitting(true);
   };
 
+const getErrCls = (errString: string | number): string => {
+  if (errString) {
+    return "error-input";
+  }
+  return "";
+}
+
   return {
     values,
     handleChange,
     handleSubmit,
     handleBlur,
     errors,
-    isSubmitting
+    isSubmitting,
+    getErrCls
   };
 }
 
