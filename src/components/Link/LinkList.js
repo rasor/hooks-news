@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-
+import { withRouter } from "react-router-dom";
 import FirebaseContext from "../../firebase/context";
 import LinkItem from "./LinkItem";
 import { LINKS_PER_PAGE } from "../../utils";
@@ -95,4 +95,4 @@ function LinkList(props) {
   );
 }
 
-export default LinkList;
+export default withRouter(LinkList);

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { withRouter } from "react-router-dom";
 import distanceInWordsToNow from "date-fns/distance_in_words_to_now";
 
 import { FirebaseContext } from "../../firebase";
@@ -46,8 +47,8 @@ function LinkDetail(props) {
         <div>
           <LinkItem key={link.id} {...link} showCount={false} index={0} />
           <textarea
-            row={6}
-            columns={60}
+            rows={6}
+            cols={60}
             value={commentText}
             onChange={e => setCommentText(e.target.value)}
           />
@@ -71,4 +72,4 @@ function LinkDetail(props) {
   );
 }
 
-export default LinkDetail;
+export default withRouter(LinkDetail);
