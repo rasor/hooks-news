@@ -11,8 +11,8 @@ The code has CRA frontend and Firebase backend and hosting at Firebase.
 
 ### Branches
 
-1. master: typescript * this one
-1. javascript: [javascript](https://github.com/rasor/hooks-news/tree/javascript)
+1. [master](https://github.com/rasor/hooks-news/tree/master): typescript * this one
+1. [javascript](https://github.com/rasor/hooks-news/tree/javascript): javascript
 
 ## Using firebase CLI
 
