@@ -6,8 +6,8 @@ import LinkItem from "./LinkItem";
 function SearchLinks() {
   const { firebase } = useContext(FirebaseContext);
   const [filter, setFilter] = useState("");
-  const [links, setLinks] = useState([]);
-  const [filteredLinks, setFilteredLinks] = useState([]);
+  const [links, setLinks] = useState<any[]>([]);
+  const [filteredLinks, setFilteredLinks] = useState<any[]>([]);
 
   useEffect(() => {
     getInitialLinks();
@@ -18,7 +18,7 @@ function SearchLinks() {
     const links = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     setLinks(links);
   }
-  const handleSearch = e => {
+  const handleSearch = (e: any) => {
     e.preventDefault();
     const query = filter.toLowerCase();
     const matchedLinks = links.filter(
