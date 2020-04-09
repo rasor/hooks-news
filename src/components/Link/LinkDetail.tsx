@@ -1,14 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import distanceInWordsToNow from "date-fns/distance_in_words_to_now";
-
 import { FirebaseContext } from "../../firebase";
 import LinkItem from "./LinkItem";
 
-function LinkDetail(props) {
+//https://www.pluralsight.com/guides/react-router-typescript
+type TParams =  { linkId: string };
+interface ILinkDetail extends RouteComponentProps<TParams> {}
+function LinkDetail(props: ILinkDetail) {
   const linkId = props.match.params.linkId;
 
   const { firebase, user } = useContext(FirebaseContext);
-  const [link, setLink] = useState(null);
+  const [link, setLink] = useState<any>(null);
   const [commentText, setCommentText] = useState("");
   const linkRef = firebase.db.collection("links").doc(linkId);
 
@@ -25,7 +28,7 @@ function LinkDetail(props) {
     if (!user) return props.history.push("/login");
     const doc = await linkRef.get();
     if (doc.exists) {
-      const previousComments = doc.data().comments;
+      const previousComments = doc.data()!.comments;
       const comment = {
         postedBy: { id: user.uid, name: user.displayName },
         created: Date.now(),
@@ -33,7 +36,7 @@ function LinkDetail(props) {
       };
       const updatedComments = [...previousComments, comment];
       linkRef.update({ comments: updatedComments });
-      setLink(prevState => ({ ...prevState, comments: updatedComments }));
+      setLink((prevState: any) => ({ ...prevState, comments: updatedComments }));
       setCommentText("");
     }
   };
@@ -46,17 +49,20 @@ function LinkDetail(props) {
         <div>
           <LinkItem key={link.id} {...link} showCount={false} index={0} />
           <textarea
-            row={6}
-            columns={60}
+            rows={6}
+            cols={60}
             value={commentText}
-            onChange={e => setCommentText(e.target.value)}
+            onChange={(e: any) => setCommentText(e.target.value)}
           />
           <div>
             <button className="button" onClick={handleAddComment}>
               Add Comment
             </button>
           </div>
-          {link.comments.map((comment, idx) => (
+          {link.comments.map((
+            comment: { postedBy: { name: React.ReactNode; }; created: string | number | Date; text: React.ReactNode; }, 
+            idx: string | number | undefined) => (
+
             <div key={idx}>
               <p className="comments-author">
                 {comment.postedBy.name} |{" "}
@@ -71,4 +77,4 @@ function LinkDetail(props) {
   );
 }
 
-export default LinkDetail;
+export default withRouter(LinkDetail);
