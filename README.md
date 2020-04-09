@@ -9,6 +9,11 @@ Code is forked from [carltonwin8/hooks-news](https://github.com/carltonwin8/hook
 
 The code has CRA frontend and Firebase backend and hosting at Firebase.  
 
+### Branches
+
+1. master: typescript
+1. javascript: javascript * this one
+
 ## Using firebase CLI
 
 Use `npm install -g firebase-tools` for firebase serverless backend functions.  
