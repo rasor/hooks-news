@@ -5,21 +5,24 @@ import "firebase/firestore";
 import firebaseConfig from "./config";
 
 export class Firebase {
+  auth: app.auth.Auth;
+  db: app.firestore.Firestore;
+  
   constructor() {
     app.initializeApp(firebaseConfig);
     this.auth = app.auth();
     this.db = app.firestore();
   }
 
-  async register(name, email, password) {
+  async register(name: any, email: string, password: string) {
     const newUser = await this.auth.createUserWithEmailAndPassword(
       email,
       password
     );
-    return await newUser.user.updateProfile({ displayName: name });
+    return await newUser.user!.updateProfile({ displayName: name });
   }
 
-  async login(email, password) {
+  async login(email: string, password: string) {
     return await this.auth.signInWithEmailAndPassword(email, password);
   }
 
@@ -27,7 +30,7 @@ export class Firebase {
     await this.auth.signOut();
   }
 
-  async resetPassword(email) {
+  async resetPassword(email: string) {
     await this.auth.sendPasswordResetEmail(email);
   }
 }
