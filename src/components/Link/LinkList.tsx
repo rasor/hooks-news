@@ -1,13 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
-
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import FirebaseContext from "../../firebase/context";
 import LinkItem from "./LinkItem";
 import { LINKS_PER_PAGE } from "../../utils";
 
-function LinkList(props) {
+//https://www.pluralsight.com/guides/react-router-typescript
+type TParams =  { page: string };
+interface ILinkList extends RouteComponentProps<TParams> {  
+}
+const LinkList: React.FC<ILinkList> = (props) => {
+
   const { firebase } = useContext(FirebaseContext);
-  const [links, setLinks] = useState([]);
-  const [cursor, setCursor] = useState(null);
+  const [links, setLinks] = useState<any[]>([]);
+  const [cursor, setCursor] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const isNewPage = props.location.pathname.includes("new");
   const isTopPage = props.location.pathname.includes("top");
@@ -35,7 +40,7 @@ function LinkList(props) {
     if (hasCursor)
       return linksRef
         .orderBy("created", "desc")
-        .startAfter(cursor.created)
+        .startAfter(cursor!.created)
         .limit(LINKS_PER_PAGE)
         .onSnapshot(handleSnapshot);
     const offset = (page - 1) * LINKS_PER_PAGE;
@@ -53,8 +58,8 @@ function LinkList(props) {
     return () => {};
   }
 
-  function handleSnapshot(snapshot) {
-    const links = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  function handleSnapshot(snapshot: any) {
+    const links = snapshot.docs.map((doc: any) => ({ id: doc.id, ...doc.data() }));
     setLinks(links);
     const lastLink = links[links.length - 1];
     setCursor(lastLink);
@@ -95,4 +100,4 @@ function LinkList(props) {
   );
 }
 
-export default LinkList;
+export default withRouter(LinkList);
