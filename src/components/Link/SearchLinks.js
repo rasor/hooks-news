@@ -5,9 +5,9 @@ import LinkItem from "./LinkItem";
 
 function SearchLinks() {
   const { firebase } = useContext(FirebaseContext);
-  const [filter, filterSet] = useState("");
-  const [links, linksSet] = useState([]);
-  const [filteredLinks, filteredLinksSet] = useState([]);
+  const [filter, setFilter] = useState("");
+  const [links, setLinks] = useState([]);
+  const [filteredLinks, setFilteredLinks] = useState([]);
 
   useEffect(() => {
     getInitialLinks();
@@ -16,7 +16,7 @@ function SearchLinks() {
   async function getInitialLinks() {
     const snapshot = await firebase.db.collection("links").get();
     const links = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    linksSet(links);
+    setLinks(links);
   }
   const handleSearch = e => {
     e.preventDefault();
@@ -27,7 +27,7 @@ function SearchLinks() {
         link.url.toLowerCase().includes(query) ||
         link.postedBy.name.toLowerCase().includes(query)
     );
-    filteredLinksSet(matchedLinks);
+    setFilteredLinks(matchedLinks);
   };
 
   return (
@@ -35,7 +35,7 @@ function SearchLinks() {
       <form onSubmit={handleSearch}>
         <div>
           Search{" "}
-          <input value={filter} onChange={e => filterSet(e.target.value)} />
+          <input value={filter} onChange={e => setFilter(e.target.value)} />
           <button>OK</button>
         </div>
       </form>

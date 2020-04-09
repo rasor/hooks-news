@@ -6,9 +6,9 @@ import { LINKS_PER_PAGE } from "../../utils";
 
 function LinkList(props) {
   const { firebase } = useContext(FirebaseContext);
-  const [links, linksSet] = useState([]);
-  const [cursor, cursorSet] = useState(null);
-  const [loading, loadingSet] = useState(false);
+  const [links, setLinks] = useState([]);
+  const [cursor, setCursor] = useState(null);
+  const [loading, setLoading] = useState(false);
   const isNewPage = props.location.pathname.includes("new");
   const isTopPage = props.location.pathname.includes("top");
   const page = Number(props.match.params.page);
@@ -20,7 +20,7 @@ function LinkList(props) {
   }, [isTopPage, page]);
 
   function getLinks() {
-    loadingSet(true);
+    setLoading(true);
     const hasCursor = Boolean(cursor);
     if (isTopPage)
       return linksRef
@@ -45,9 +45,9 @@ function LinkList(props) {
     )
       .then(response => response.json())
       .then(links => {
-        linksSet(links);
-        cursorSet(links[links.length - 1]);
-        loadingSet(false);
+        setLinks(links);
+        setCursor(links[links.length - 1]);
+        setLoading(false);
       })
       .catch(e => console.log("error", e));
     return () => {};
@@ -55,10 +55,10 @@ function LinkList(props) {
 
   function handleSnapshot(snapshot) {
     const links = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    linksSet(links);
+    setLinks(links);
     const lastLink = links[links.length - 1];
-    cursorSet(lastLink);
-    loadingSet(false);
+    setCursor(lastLink);
+    setLoading(false);
   }
 
   function visitPreviousPage() {

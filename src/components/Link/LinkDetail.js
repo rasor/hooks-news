@@ -8,8 +8,8 @@ function LinkDetail(props) {
   const linkId = props.match.params.linkId;
 
   const { firebase, user } = useContext(FirebaseContext);
-  const [link, linkSet] = useState(null);
-  const [commentText, commentTextSet] = useState("");
+  const [link, setLink] = useState(null);
+  const [commentText, setCommentText] = useState("");
   const linkRef = firebase.db.collection("links").doc(linkId);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ function LinkDetail(props) {
 
   async function getInitialLinks() {
     const doc = await linkRef.get();
-    linkSet({ ...doc.data(), id: doc.id });
+    setLink({ ...doc.data(), id: doc.id });
   }
 
   const handleAddComment = async () => {
@@ -33,8 +33,8 @@ function LinkDetail(props) {
       };
       const updatedComments = [...previousComments, comment];
       linkRef.update({ comments: updatedComments });
-      linkSet(prevState => ({ ...prevState, comments: updatedComments }));
-      commentTextSet("");
+      setLink(prevState => ({ ...prevState, comments: updatedComments }));
+      setCommentText("");
     }
   };
 
@@ -49,7 +49,7 @@ function LinkDetail(props) {
             row={6}
             columns={60}
             value={commentText}
-            onChange={e => commentTextSet(e.target.value)}
+            onChange={e => setCommentText(e.target.value)}
           />
           <div>
             <button className="button" onClick={handleAddComment}>

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 
 function useFormValidation(initialState, validateLogin, authenticate) {
-  const [values, valuesSet] = useState(initialState);
-  const [errors, errorsSet] = useState({});
-  const [isSubmitting, isSubmittingSet] = useState(false);
+  const [values, setValues] = useState(initialState);
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (isSubmitting) {
@@ -11,26 +11,26 @@ function useFormValidation(initialState, validateLogin, authenticate) {
       if (noErrors) {
         (async () => {
           const cb = await authenticate();
-          isSubmittingSet(false);
+          setIsSubmitting(false);
           if (cb) cb();
         })();
       } else {
-        isSubmittingSet(false);
+        setIsSubmitting(false);
       }
     }
   }, [errors]);
 
   const handleChange = ({ target }) =>
-    valuesSet(state => ({ ...state, [target.name]: target.value }));
+    setValues(state => ({ ...state, [target.name]: target.value }));
 
   const handleBlur = e => {
     const errors = validateLogin(values);
-    errorsSet(errors);
+    setErrors(errors);
   };
   const handleSubmit = e => {
     e.preventDefault();
     handleBlur();
-    isSubmittingSet(true);
+    setIsSubmitting(true);
   };
 
   return {

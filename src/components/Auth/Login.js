@@ -20,8 +20,8 @@ function Login(props) {
     errors,
     isSubmitting
   } = useFormValidation(INITIAL_SATE, validateLogin, authenticateUser);
-  const [login, loginSet] = useState(true);
-  const [firebaseError, firebaseErrorSet] = useState(null);
+  const [login, setLogin] = useState(true);
+  const [firebaseError, setFirebaseError] = useState(null);
 
   async function authenticateUser() {
     const { name, email, password } = values;
@@ -31,7 +31,7 @@ function Login(props) {
         : await firebase.register(name, email, password);
     } catch (e) {
       console.error("Auth error", e);
-      firebaseErrorSet(e.message);
+      setFirebaseError(e.message);
     }
     return () => props.history.push("/");
   }
@@ -85,7 +85,7 @@ function Login(props) {
             className="button pointer"
             onClick={e => {
               e.preventDefault();
-              loginSet(state => !state);
+              setLogin(state => !state);
             }}
           >
             {login ? "need to create an account" : "already have an account"}

@@ -4,19 +4,19 @@ import { FirebaseContext } from "../../firebase";
 
 function ForgotPassword() {
   const { firebase } = useContext(FirebaseContext);
-  const [resetPasswordEmail, resetPasswordEmailSet] = useState("");
-  const [isPwReset, isPwResetSet] = useState(false);
-  const [pwResetError, pwResetErrorSet] = useState(null);
+  const [resetPasswordEmail, setResetPasswordEmail] = useState("");
+  const [isPwReset, setIsPwReset] = useState(false);
+  const [pwResetError, setPwResetError] = useState(null);
 
   const handleResetPassword = async () => {
     try {
       await firebase.resetPassword(resetPasswordEmail);
-      isPwResetSet(true);
-      pwResetErrorSet(null);
+      setIsPwReset(true);
+      setPwResetError(null);
     } catch (e) {
       console.error("Error sending email", e);
-      isPwResetSet(false);
-      pwResetErrorSet(e.message);
+      setIsPwReset(false);
+      setPwResetError(e.message);
     }
   };
 
@@ -27,7 +27,7 @@ function ForgotPassword() {
         className="email"
         name="resetPasswordEmail"
         placeholder="Provide your account email"
-        onChange={({ target }) => resetPasswordEmailSet(target.value)}
+        onChange={({ target }) => setResetPasswordEmail(target.value)}
         value={resetPasswordEmail}
       />
       <div>
