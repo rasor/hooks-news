@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
 import useFormValidation from "../Auth/useFormValidation";
-import validateCreateLink from "../Auth/validateCreateLink";
+import validateCreateLink from "./validateCreateLink";
 import { FirebaseContext } from "../../firebase";
 
 const INITIAL_STATE = {
