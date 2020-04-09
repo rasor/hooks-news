@@ -1,8 +1,17 @@
 import { useState, useEffect } from "react";
+import { Dictionary } from "../../models/interfaces";
 
-function useFormValidation(initialState, validateLogin, authenticate) {
-  const [values, setValues] = useState(initialState);
-  const [errors, setErrors] = useState({});
+function useFormValidation(
+  /** (form)vaules object to validate */
+  initialState: Dictionary, 
+  /** Func for validating the vlues object */
+  validateLogin: ({}: Dictionary) => Dictionary, 
+  /** Funct to exec if validation succeeds */
+  authenticate: () => any
+  ) {
+
+  const [values, setValues] = useState<Dictionary>(initialState);
+  const [errors, setErrors] = useState<Dictionary>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -20,14 +29,14 @@ function useFormValidation(initialState, validateLogin, authenticate) {
     }
   }, [errors]);
 
-  const handleChange = ({ target }) =>
+  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) =>
     setValues(state => ({ ...state, [target.name]: target.value }));
 
-  const handleBlur = e => {
+  const handleBlur = () => {
     const errors = validateLogin(values);
     setErrors(errors);
   };
-  const handleSubmit = e => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     handleBlur();
     setIsSubmitting(true);
