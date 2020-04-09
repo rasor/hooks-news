@@ -1,15 +1,20 @@
 import React, { useContext } from "react";
 
-import useFormValidation from "../Auth/useFormValidation";
+import useFormValidation from "../../hooks/useFormValidation";
 import validateCreateLink from "./validateCreateLink";
 import { FirebaseContext } from "../../firebase";
+import { Dictionary } from "../../models/interfaces";
 
-const INITIAL_STATE = {
+export interface CreateLinkFormValues extends Dictionary {
+  description: string;
+  url: string;
+}
+const INITIAL_STATE: CreateLinkFormValues = {
   description: "",
   url: ""
 };
 
-function CreateLink(props) {
+function CreateLink(props: any) {
   const { firebase, user } = useContext(FirebaseContext);
 
   const {
@@ -17,10 +22,11 @@ function CreateLink(props) {
     handleChange,
     handleSubmit,
     errors,
-    isSubmitting
+    isSubmitting,
+    getErrCls
   } = useFormValidation(INITIAL_STATE, validateCreateLink, handleCreateLink);
 
-  async function handleCreateLink() {
+  async function handleCreateLink(values: CreateLinkFormValues) {
     if (!user) return props.history.push("/login");
     const newLink = {
       ...values,
@@ -46,7 +52,7 @@ function CreateLink(props) {
         type="text"
         onChange={handleChange}
         value={values.description}
-        className={errors.description && "error-input"}
+        className={getErrCls(errors.description)}
       />
       {errors.description && <p className="error-text">{errors.description}</p>}
       <input
@@ -56,7 +62,7 @@ function CreateLink(props) {
         type="url"
         onChange={handleChange}
         value={values.url}
-        className={errors.url && "error-input"}
+        className={getErrCls(errors.url)}
       />
       {errors.url && <p className="error-text">{errors.url}</p>}
       <button className="button" type="submit" disabled={isSubmitting}>

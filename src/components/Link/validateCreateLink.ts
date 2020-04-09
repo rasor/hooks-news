@@ -1,5 +1,8 @@
-export default function validateCreateLink(values) {
-  let errors = {};
+import { Dictionary } from "../../models/interfaces";
+import { CreateLinkFormValues } from "./CreateLink";
+
+export default function validateCreateLink(values: CreateLinkFormValues): Dictionary {
+  let errors: Dictionary = {};
 
   if (!values.description) {
     errors.description = "Description required";

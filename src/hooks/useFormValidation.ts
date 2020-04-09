@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Dictionary } from "../../models/interfaces";
+import { Dictionary } from "../models/interfaces";
 
 function useFormValidation(
   /** (form)vaules object to validate */

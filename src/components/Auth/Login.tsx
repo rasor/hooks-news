@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import useFormValidation from "./useFormValidation";
+import useFormValidation from "../../hooks/useFormValidation";
 import validateLogin from "./validateLogin";
 import firebase from "../../firebase";
 import { Dictionary } from "../../models/interfaces";
