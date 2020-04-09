@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import firebase from "../../firebase";
 
 function useAuth() {
-  const [authUser, setAuthUser] = useState(null);
+  const [authUser, setAuthUser] = useState<firebase.User | null>(null);
 
   useEffect(() => {
     const unsubscribe = firebase.auth.onAuthStateChanged(user => {

@@ -4,7 +4,7 @@ import "firebase/firestore";
 
 import firebaseConfig from "./config";
 
-class Firebase {
+export class Firebase {
   constructor() {
     app.initializeApp(firebaseConfig);
     this.auth = app.auth();
