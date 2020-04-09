@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
-import { Link, withRouter } from "react-router-dom";
+// https://www.dev-eth0.de/2019/09/10/using-withrouter-in-a-typescript-react-component/
+import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 import distanceInWordsToNow from "date-fns/distance_in_words_to_now";
 import { getDomain } from "../../utils";
 import FirebaseContext from "../../firebase/context";
 
-interface IProps {
+interface ILinkItem extends RouteComponentProps {
   description: string;
   url: string;
   showCount: boolean;
@@ -13,10 +14,9 @@ interface IProps {
   created: string;
   id: string;
   comments: string;
-  history: any;
   voteCount: string;
 }
-const LinkItem: React.FC<any> = (props) => {
+const LinkItem: React.FunctionComponent<ILinkItem> = (props) => {
   const { firebase, user } = useContext(FirebaseContext);
 
   const {
@@ -28,7 +28,7 @@ const LinkItem: React.FC<any> = (props) => {
     created,
     id,
     comments,
-    history,
+    history, // from RouteComponentProps
     voteCount
   } = props;
 
